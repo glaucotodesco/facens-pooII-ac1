@@ -40,7 +40,7 @@ public class EventController {
             @RequestParam(value = "description", defaultValue = "") String description,
             @RequestParam(value = "place", defaultValue = "") String place,
             @RequestParam(value = "emailContact", defaultValue = "") String emailContact,
-            @RequestParam(value = "startDate", defaultValue = "01/01/1900") LocalDate startDate
+            @RequestParam(value = "startDate", defaultValue = "1900-01-01") LocalDate startDate
 
     ) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
