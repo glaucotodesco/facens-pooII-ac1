@@ -55,15 +55,26 @@ public class EventService {
     }
 
     public EventDTO updateEvent(Long id, EventUpdateDTO eventUpdateDTO) {
-        try {
-            Event entity = repository.getOne(id);
-            entity.setName(eventUpdateDTO.getName());
-            entity = repository.save(entity);
-            return new EventDTO(entity);
+       
+        
+        if (eventUpdateDTO.getStartDate().compareTo(eventUpdateDTO.getEndDate()) > 0) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "The end date should be bigger than the start date!");
+        } else {
+        {
+            try {
+                Event entity = repository.getOne(id);
+                entity.setName(eventUpdateDTO.getName());
+                entity = repository.save(entity);
+                return new EventDTO(entity);
+    
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+            }
 
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
+        
+        
     }
 
 }
